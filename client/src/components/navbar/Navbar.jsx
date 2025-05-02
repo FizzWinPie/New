@@ -22,9 +22,9 @@ function Navbar() {
       </div>
       <div className="right">
         {currentUser ? (
-          <div className="user">
+          <div className="user" onClick={() => (window.location.href = "/profile")}>
             <img
-              src= {currentUser.avatar || "/noavatar.jpg"}
+              src={currentUser.avatar || "/noavatar.jpg"}
               alt=""
             />
             <span>{currentUser.username}</span>
