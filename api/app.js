@@ -16,6 +16,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/test", testRoute);
 app.use("/api/users", userRoute);
+app.get("/health", (req, res) => res.sendStatus(200));
 
 app.listen(8800, () => {
   console.log("Server is running");
