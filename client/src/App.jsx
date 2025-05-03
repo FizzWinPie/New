@@ -23,7 +23,7 @@ function App() {
         {
           path: "/list",
           element: <ListPage />,
-          // loader: listPageLoader,
+          loader: listPageLoader,
         },
         {
           path: "/:id",
