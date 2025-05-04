@@ -46,17 +46,16 @@ export const login = async (req, res) => {
       },
       process.env.JWT_SECRET_KEY,
       { expiresIn: 1000 * 60 * 60 * 24 * 7 }
-    ); // careful when prod - no dotenv but new console ninja command
+    );
 
     const { password: userPassword, ...userInfo } = user;
 
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        // domain: "estate-frontend-oz0n.onrender.com"
       })
       .status(200)
       .json(userInfo);
