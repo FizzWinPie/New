@@ -6,6 +6,7 @@ const io = new Server({
       process.env.NODE_ENV === "production" ? process.env.VITE_SOCKET_URL : "http://localhost:5173",
       "http://localhost:3000"
     ],
+    credentials: true,
     methods: ["GET", "POST"]
   },
 });
