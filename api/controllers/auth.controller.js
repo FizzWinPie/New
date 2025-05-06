@@ -47,9 +47,7 @@ export const login = async (req, res) => {
       { expiresIn: 1000 * 60 * 60 * 24 * 7 }
     );
 
-    const { password: userPassword, ...userInfo } = user;
-    console.log("is it production", process.env.NODE_ENV === "production");
-    
+    const { password: userPassword, ...userInfo } = user;    
 
     res
     .cookie("token", token, {

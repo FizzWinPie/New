@@ -108,8 +108,19 @@ nav {
 
     .register {
       background-color: #fece51;
+      padding: 8px 16px;
+      margin: 0 12px;
+      border-radius: 5px;
+      border: none;
+      text-decoration: none;
+      color: white;
+      line-height: 1;
+      height: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-
+        
     .menuIcon {
       display: none;
       z-index: 999;
