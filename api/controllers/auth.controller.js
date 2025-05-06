@@ -16,7 +16,6 @@ export const register = async (req, res) => {
       },
     });
 
-    console.log(newUser);
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.log(error);
@@ -49,16 +48,18 @@ export const login = async (req, res) => {
     );
 
     const { password: userPassword, ...userInfo } = user;
+    console.log("is it production", process.env.NODE_ENV === "production");
+    
 
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-      })
-      .status(200)
-      .json(userInfo);
+    .cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    })
+    .status(200)
+    .json(userInfo);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to authenticate" });

@@ -18,12 +18,10 @@ const addUser = (userId, socketId) => {
   if (!userExists) {
     onlineUser.push({ userId, socketId });
   }
-  console.log("After adding online users;", onlineUser);
 };
 
 const removeUser = (socketId) => {
   onlineUser = onlineUser.filter((user) => user.socketId !== socketId);
-  console.log("After remove online users;", onlineUser);
 };
 
 const getUser = (userId) => {
@@ -33,7 +31,6 @@ const getUser = (userId) => {
 io.on("connection", (socket) => {
   socket.on("newUser", (userId) => {
     addUser(userId, socket.id);
-    console.log(onlineUser);
   });
 
   socket.on("sendMessage", ({ receiverId, data }) => {
