@@ -1,11 +1,12 @@
 TODO
 BACKEND
 1- when user is saved in local storage but no token it must be redirect to login and localstorage cleaned
-2- redirect to login instead of 401 error like 1
+2- redirect to login instead of 401 error (related to no.1)
 3- user must message a person directly (no start messaging functionality implemented)
 4- delete user profile and delete posts
 5- saved Posts must be different for different users
 6- add admin functionality
+7- fix GET USERS -> only admin can do it (security risk due to passwords)
 
 FRONTEND
 1- fix the signup button - done
