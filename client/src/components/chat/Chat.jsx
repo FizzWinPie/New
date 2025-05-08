@@ -83,9 +83,10 @@ function Chat({ chats }) {
             className="message"
             key={c.id}
             style={{
-              backgroundColor: c.seenBy.includes(currentUser.id) || chat?.id === c.id
-                ? "white"
-                : "#fecd514e",
+              backgroundColor:
+                c.seenBy.includes(currentUser.id) || chat?.id === c.id
+                  ? "white"
+                  : "#fecd514e",
             }}
             onClick={() => handleOpenChat(c.id, c.receiver)}
           >
@@ -94,7 +95,6 @@ function Chat({ chats }) {
             <p>{c.lastMessage}</p>
           </div>
         ))}
-        ;
       </div>
       {chat && (
         <div className="chatBox">

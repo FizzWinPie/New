@@ -26,6 +26,7 @@ export const getPosts = async (req, res) => {
 
 export const getPost = async (req, res) => {
   const id = req.params.id;
+
   try {
     const post = await prisma.post.findUnique({
       where: { id },
@@ -33,43 +34,44 @@ export const getPost = async (req, res) => {
         postDetail: true,
         user: {
           select: {
-            username:true,
-            avatar:true
-          }
+            username: true,
+            avatar: true,
+          },
         },
-      }
+      },
     });
 
-    let userId;
-
+    let userId = null;
     const token = req.cookies?.token;
-    if (!token) {
-      userId = null;
-    } else {
-      jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-        if (err) {
-          userId = null;
-        } else {
-          userId = payload.id;
-        }
+
+    if (token) {
+      try {
+        const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        userId = payload.id;
+      } catch (err) {
+        userId = null;
+      }
+    }
+
+    let saved = null;
+    if (userId) {
+      saved = await prisma.savedPost.findUnique({
+        where: {
+          userId_postId: {
+            postId: id,
+            userId,
+          },
+        },
       });
     }
 
-    const saved = await prisma.savedPost.findUnique({
-      where: {
-        userId_postId: {
-          postId: id, 
-          userId,
-        }
-      }
-    })
-
-    res.status(200).json({...post, isSaved: saved ? true : false} );
+    res.status(200).json({ ...post, isSaved: !!saved });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to get single post" });
   }
 };
+
 
 export const addPost = async (req, res) => {
   const body = req.body;
