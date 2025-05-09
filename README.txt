@@ -1,8 +1,8 @@
 TODO
 BACKEND
-1- when user is saved in local storage but no token it must be redirect to login and localstorage cleaned
-2- redirect to login instead of 401 error (related to no.1)
-3- user must message a person directly (no start messaging functionality implemented)
+1- when user is saved in local storage but no token it must be redirect to login and localstorage cleaned - DONE
+2- redirect to login instead of 401 error (related to no.1) - DONE
+3- user must message a person directly (no start messaging functionality implemented) - DONE
 4- delete user profile and delete posts
 5- my list & saved Posts must be different for different users
 6- add admin functionality

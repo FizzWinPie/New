@@ -73,6 +73,9 @@ export const getChat = async (req, res) => {
 export const addChat = async (req, res) => {
   const tokenUserId = req.userId;
 
+  if (tokenUserId === req.body.receiverId) 
+    return res.status(500).json({message: "You cannot message yourself"});
+
   try {
     const newChat = await prisma.chat.create({
       data: {

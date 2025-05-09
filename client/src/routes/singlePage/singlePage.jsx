@@ -1,30 +1,49 @@
 import "./singlePage.scss";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
-import {AuthContext} from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 
 function SinglePage() {
   const post = useLoaderData();
-  const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [saved, setSaved] = useState(post.isSaved);
+  const navigate = useNavigate();
 
   const handleSave = async () => {
     setSaved((prev) => !prev);
     if (!currentUser) {
-      redirect("/login")
+      redirect("/login");
     }
 
     try {
-      await apiRequest.post("/users/save", {postId: post.id});
+      await apiRequest.post("/users/save", { postId: post.id });
     } catch (error) {
       console.log(error);
-      setSaved((prev) => !prev)
+      setSaved((prev) => !prev);
     }
-  }
+  };
+
+  const handleMessage = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await apiRequest.post(
+        "/chats/",
+        { receiverId: post.userId }, 
+        { withCredentials: true }
+      );
+      navigate("/profile");
+    } catch (error) {
+      console.log("Failed to create chat:", error);
+    }
+  };
 
   return (
     <div className="singlePage">
@@ -137,7 +156,7 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleMessage}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
