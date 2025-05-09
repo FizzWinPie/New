@@ -8,4 +8,20 @@ const apiRequest = axios.create({
   },
 });
 
+let logoutHandler = null;
+
+apiRequest.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && logoutHandler) {
+      logoutHandler();
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const setLogoutHandler = (fn) => {
+  logoutHandler = fn;
+};
+
 export default apiRequest;
